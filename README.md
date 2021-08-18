@@ -1,7 +1,7 @@
-# meta-f1c100s
+# Yocto BSP for Allwinner F1C100s
 
 
-TEST ENV: Ubuntu 20.04
+## Host build: Ubuntu20.04 LTS
 
 ```shell
 cd ~
@@ -20,9 +20,15 @@ git clone https://github.com/ninhnn2/meta-f1c100s.git -b zeus
 
 source oe-init-build-env build-f1c100s
 
+cp ../meta-f1c100s/conf/sample/local.conf.sample ./conf/local.conf
+
+cp ../meta-f1c100s/conf/sample/bblayers.conf.sample ./conf/bblayers.conf
+
 bitbake core-image-minimal
 ```
 
-# Yocto Rom Test
+## My build image for testing 
 
 [download link](https://mega.nz/file/UiBWnDRQ#jSAgU6_mVsZ91opM_cSA_pZ5nb5aLgdd0M5-xkwwXFA)
+
+
