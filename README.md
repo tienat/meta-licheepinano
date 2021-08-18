@@ -22,3 +22,7 @@ source oe-init-build-env build-f1c100s
 
 bitbake core-image-minimal
 ```
+
+# Yocto Rom Test
+
+[norflash rom test](https://mega.nz/file/UiBWnDRQ#jSAgU6_mVsZ91opM_cSA_pZ5nb5aLgdd0M5-xkwwXFA)
