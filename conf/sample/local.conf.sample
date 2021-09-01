@@ -40,22 +40,168 @@ MACHINE ?= "f1c100s"
 
 HOSTTOOLS += "x86_64-linux-gnu-gcc"
 
+BB_NUMBER_THREADS ?= "3"
+PARALLEL_MAKE ?= "-j 3"
 
-BB_NUMBER_THREADS ?= "4"
-PARALLEL_MAKE ?= "-j 4"
-
-IMAGE_INSTALL_append += " \
-	mtd-utils \
-	ntp \
-	ntp-tickadj \
-	dropbear \
-	parted \
-	procps \
+QT_DEV_TOOLS = " \
+qtbase-dev \
+qtbase-mkspecs \
+qtbase-tools \
+qtserialport-dev \
+qtserialport-mkspecs \
+qtdeclarative \
+qtdeclarative-qmlplugins \
+qttranslations-qtdeclarative \
+qtmultimedia \
+qtmultimedia-plugins \
+qtsvg \
+qtsvg-plugins \
+qtsensors \
+qtimageformats-plugins \
+qtsystems \
+qtsystems-tools \
+qtsystems-qmlplugins \
+qtscript \
+qtconnectivity-dev \
+qtconnectivity-mkspecs \
+qtconnectivity-qmlplugins \
+qtlocation-plugins \
+qtlocation-qmlplugins \
+qtquickcontrols-qmlplugins \
+qtxmlpatterns-dev \
+qtxmlpatterns-mkspecs \
+qttranslations-qtxmlpatterns \
+qtquickcontrols2 \
+qtquickcontrols2-dev \
+qtquickcontrols2-mkspecs \
+qtcharts \
 "
 
+QT_TOOLS = " \
+    qtbase \
+    qtbase-plugins \
+    qtserialport \
+    qt5-env \
+"
 
+FONTS = " \
+    fontconfig \
+    fontconfig-utils \
+    ttf-bitstream-vera \
+"
 
+TSLIB = " \
+    tslib \
+    tslib-calibrate \
+    tslib-conf \
+"
 
+CORE_OS = " \
+    packagegroup-core-boot \
+    tzdata \
+    dropbear \
+"
+
+KERNEL_EXTRA_INSTALL = " \
+    kernel-modules \
+"
+
+WIFI_SUPPORT = " \
+    crda \
+    iw \
+    linux-firmware-ath9k \
+    linux-firmware-ralink \
+    linux-firmware-rtl8192ce \
+    linux-firmware-rtl8192cu \
+    linux-firmware-rtl8192su \
+    linux-firmware-wl18xx \
+    wpa-supplicant \
+"
+
+DEV_SDK_INSTALL = " \
+    binutils \
+    binutils-symlinks \
+    coreutils \
+    cpp \
+    cpp-symlinks \
+    diffutils \
+    elfutils \
+    file \
+    g++ \
+    g++-symlinks \
+    gcc \
+    gcc-symlinks \
+    gdb \
+    gettext \
+    git \
+    ldd \
+    libstdc++ \
+    libstdc++-dev \
+    libtool \
+    ltrace \
+    make \
+    nasm \
+    perl-modules \
+    pkgconfig \
+    python-modules \
+    python3-modules \
+    strace \
+    mtd-utils \
+    dbus \
+"
+
+DEV_EXTRAS = " \
+    ntp \
+    ntp-tickadj \
+"
+
+EXTRA_TOOLS_INSTALL = " \
+    bzip2 \
+    devmem2 \
+    dosfstools \
+    e2fsprogs-mke2fs \
+    ethtool \
+    findutils \
+    i2c-tools \
+    iperf3 \
+    iproute2 \
+    iptables \
+    less \
+    nano \
+    netcat \
+    parted \
+    procps \
+    sysfsutils \
+    tcpdump \
+    tree \
+    unzip \
+    util-linux \
+    util-linux-blkid \
+    wget \
+    xz \
+    zip \
+    make \
+    cmake \
+"
+
+IMAGE_INSTALL_append += " \
+    ${QT_TOOLS} \
+    ${CORE_OS} \
+    ${DEV_SDK_INSTALL} \
+    ${DEV_EXTRAS} \
+    ${EXTRA_TOOLS_INSTALL} \
+    ${KERNEL_EXTRA_INSTALL} \
+    ${WIFI_SUPPORT} \
+"
+
+IMAGE_INSTALL_append += " \
+    ${FONTS} \
+    ${QT_TOOLS} \
+    ${QT_DEV_TOOLS} \
+    qcolorcheck \
+    ${TSLIB} \
+    tspress \
+"
 
 #
 # Where to place downloads
@@ -68,7 +214,7 @@ IMAGE_INSTALL_append += " \
 #
 # The default is a downloads directory under TOPDIR which is the build directory.
 #
-#DL_DIR ?= "${TOPDIR}/downloads"
+DL_DIR ?= "/home/fanning/yocto/poky/build-v3s/downloads"
 
 #
 # Where to place shared-state files
@@ -105,8 +251,9 @@ IMAGE_INSTALL_append += " \
 # The default value is fine for general Yocto project use, at least initially.
 # Ultimately when creating custom policy, people will likely end up subclassing 
 # these defaults.
-#
-DISTRO ?= "poky"
+
+#DISTRO ?= "poky"
+
 # As an example of a subclass there is a "bleeding" edge policy configuration
 # where many versions are set to the absolute latest code from the upstream 
 # source control systems. This is just mentioned here as an example, its not
@@ -125,7 +272,7 @@ DISTRO ?= "poky"
 #  - 'package_rpm' for rpm style packages
 # E.g.: PACKAGE_CLASSES ?= "package_rpm package_deb package_ipk"
 # We default to rpm:
-PACKAGE_CLASSES ?= "package_rpm"
+PACKAGE_CLASSES ?= "package_ipk"
 
 #
 # SDK target architecture
